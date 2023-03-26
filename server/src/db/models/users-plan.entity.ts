@@ -15,7 +15,7 @@ export class UsersPlan extends Model<UsersPlan> {
     type: DataType.INTEGER,
     allowNull: false,
   })
-  UserId: number;
+  userId: number;
 
   @ForeignKey(() => Plan)
   @Column({

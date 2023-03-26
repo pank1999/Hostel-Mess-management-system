@@ -26,4 +26,7 @@ export class Meal extends Model<Meal> {
 
   @Column
   isFullFilled: boolean;
+
+  @Column
+  type: string;
 }

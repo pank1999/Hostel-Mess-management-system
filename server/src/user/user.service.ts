@@ -1,15 +1,18 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { USER_REPOSITORY } from 'src/db/constants';
+import { USER_PLAN_REPOSITORY, USER_REPOSITORY } from 'src/db/constants';
 import { ILoginUser } from 'src/db/interface/user.interface';
 import { User } from 'src/db/models/user.entity';
 import { UserDto } from './dto/user.dto';
 
 import * as bcrypt from 'bcrypt';
+import { UsersPlan } from 'src/db/models/users-plan.entity';
 
 @Injectable()
 export class UserService {
   constructor(
     @Inject(USER_REPOSITORY) private readonly userRepository: typeof User,
+    @Inject(USER_PLAN_REPOSITORY)
+    private readonly userPlanRepository: typeof UsersPlan,
   ) {}
   public async register(user: UserDto) {
     const hashedPassword = await bcrypt.hash(user.password, 10);
@@ -40,5 +43,21 @@ export class UserService {
 
   private async verifyUser(password: string, dbPassword: string) {
     return await bcrypt.compare(password, dbPassword);
+  }
+
+  public async addUserPlan(userPlan: UsersPlan) {
+    return await this.userPlanRepository.create<UsersPlan>(userPlan);
+  }
+
+  public async getActiveUserPlan(userId: number, isActive: boolean) {
+    return await this.userPlanRepository.findOne({
+      where: { userId, isActive },
+    });
+  }
+
+  public async getAllUserPlan(userId: number) {
+    return await this.userPlanRepository.findAll({
+      where: { userId },
+    });
   }
 }
