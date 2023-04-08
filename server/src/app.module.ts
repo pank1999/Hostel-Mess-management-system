@@ -4,8 +4,6 @@ import { AppService } from './app.service';
 import { DatabaseModule } from './db/db.module';
 import { ConfigModule } from '@nestjs/config';
 import { UserModule } from './user/user.module';
-import { PlansController } from './plans/plans.controller';
-import { PlansService } from './plans/plans.service';
 import { PlansModule } from './plans/plans.module';
 import { MealsModule } from './meals/meals.module';
 
@@ -17,7 +15,7 @@ import { MealsModule } from './meals/meals.module';
     PlansModule,
     MealsModule,
   ],
-  controllers: [AppController, PlansController],
-  providers: [AppService, PlansService],
+  controllers: [AppController],
+  providers: [AppService],
 })
 export class AppModule {}

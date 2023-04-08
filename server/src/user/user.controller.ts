@@ -31,4 +31,19 @@ export class UserController {
   public getAllUserPlan(@Param('id') userId: number) {
     return this.userService.getAllUserPlan(userId);
   }
+
+  @Get('/')
+  public getAllUserWithActivePlan() {
+    return this.userService.getAllActivePlanUser(true);
+  }
+
+  @Get('/filter/:query')
+  public getFilteredUserWithActivePlan(@Param('query') query: string) {
+    return this.userService.getFilteredActivePlanUser(true, query);
+  }
+
+  @Get('/:id')
+  public getUserById(@Param('id') id: number) {
+    return this.userService.getUserById(id);
+  }
 }

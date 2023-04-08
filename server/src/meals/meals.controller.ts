@@ -12,11 +12,8 @@ export class MealsController {
   }
 
   @Get('/:id')
-  public getAllUserMeal(
-    @Query('planId') planId: number,
-    @Param('id') userId: number,
-  ) {
-    this.mealService.getAllUserMeal(userId, planId);
+  public getAllUserMeal(@Param('id') userId: number) {
+    return this.mealService.getAllUserMeal(userId);
   }
 
   @Get('/')

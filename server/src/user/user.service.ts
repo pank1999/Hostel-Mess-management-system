@@ -54,10 +54,27 @@ export class UserService {
       where: { userId, isActive },
     });
   }
+  public async getAllActivePlanUser(isActive: boolean) {
+    return await this.userRepository.findAll({ include: [UsersPlan] });
+  }
+  public async getFilteredActivePlanUser(isActive: boolean, query: string) {
+    const users = await this.userRepository.findAll({ include: [UsersPlan] });
+    if (query == 'all') {
+      return users;
+    }
+    const filteredUser = users.filter((user) =>
+      user.name.toLowerCase().includes(query),
+    );
+    return filteredUser;
+  }
 
   public async getAllUserPlan(userId: number) {
     return await this.userPlanRepository.findAll({
       where: { userId },
     });
+  }
+
+  public async getUserById(id: number) {
+    return await this.userRepository.findByPk(id);
   }
 }

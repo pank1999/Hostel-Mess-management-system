@@ -1,113 +1,67 @@
-import {
-  Avatar,
-  Button,
-  ButtonGroup,
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Pagination,
-  Select,
-  SelectChangeEvent,
-} from "@mui/material";
-import Header from "../../components/header/header";
-import "./Dashboard.css";
-import * as React from "react";
-import { Link } from "react-router-dom";
-import ListItem from "../../components/list-item/ListItem";
-
+import { Button, ButtonGroup, Pagination } from '@mui/material';
+import './Dashboard.css';
+import * as React from 'react';
+import ListItem from '../../components/list-item/ListItem';
+import Axios from 'axios';
+import { IUser } from '../../interfaces/user.interface';
+import { useQuery } from '@tanstack/react-query';
 export default function Dashboard() {
-  const [date, setDate] = React.useState("23 Jan");
+  const BASE_URL = 'http://localhost:3001';
 
-  const handleChange = (event: SelectChangeEvent) => {
-    setDate(event.target.value as string);
-  };
+  const [studentList, setStudentList] = React.useState<IUser[]>([]);
+  const [query, setQuery] = React.useState('all');
+
+  // var { data: studentList } = useQuery<IUser[]>(['studentList'], async () => {
+  //   return await Axios.get<IUser[]>(`${BASE_URL}/user`).then((res) => {
+  //     // console.log(res.data);
+  //     return res.data;
+  //   });
+  // });
+
+  React.useEffect(() => {
+    const search = async () => {
+      await Axios.get(`${BASE_URL}/user/filter/${query}`).then((res) => {
+        if (res.data) {
+          console.log(res.data);
+          setStudentList(res.data);
+          console.log(studentList);
+        }
+      });
+    };
+    search();
+  }, [query]);
 
   return (
     <div className="wrapper">
-      <Header />
       <div className="main-container">
-        <div className="left">
-          <span>welcome</span>
-        </div>
         <div className="search-container">
-          <input type="text" placeholder="Search here..." />
-        </div>
-        <div className="right">
-          <span>Admin</span>
+          <input
+            type="text"
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder="Search here..."
+          />
         </div>
       </div>
       <div className="list-container">
         <div className="filter-option">
+          <span>Student Lists</span>
           <ButtonGroup variant="outlined" aria-label="outlined button group">
-            <Button>Lunch</Button>
-            <Button>Dinner</Button>
+            <Button>Active</Button>
+            <Button>Inactive</Button>
             <Button>All</Button>
           </ButtonGroup>
-          <div className="date">
-            <FormControl fullWidth>
-              <InputLabel id="demo-simple-select-label">Date</InputLabel>
-              <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                value={date}
-                label="Date"
-                onChange={handleChange}
-              >
-                <MenuItem value={10}>23 January</MenuItem>
-                <MenuItem value={20}>24 January</MenuItem>
-                <MenuItem value={30}>25 January</MenuItem>
-              </Select>
-            </FormControl>
-          </div>
         </div>
-        <ListItem
-          fullName="Pankaj Pandey"
-          avatarColor="black"
-          avatar="Pankaj"
-          id={1}
-        />
-        <ListItem
-          fullName="Neeraj Pandey"
-          id={2}
-          avatarColor="blue"
-          avatar="Neeraj"
-        />
-        <ListItem
-          fullName="Saurabh Pandey"
-          avatarColor="red"
-          avatar="Saurabh"
-          id={3}
-        />
-        <ListItem
-          fullName="Priya Pandey"
-          id={4}
-          avatarColor="green"
-          avatar="Priya"
-        />
-        <ListItem
-          fullName="Pankaj Pandey"
-          avatarColor="black"
-          avatar="Pankaj"
-          id={5}
-        />
-        <ListItem
-          fullName="Neeraj Pandey"
-          id={6}
-          avatarColor="blue"
-          avatar="Neeraj"
-        />
-        <ListItem
-          fullName="Saurabh Pandey"
-          avatarColor="red"
-          avatar="Saurabh"
-          id={7}
-        />
-        <ListItem
-          fullName="Priya Pandey"
-          id={8}
-          avatarColor="green"
-          avatar="Priya"
-        />
+        {studentList?.map((student) => (
+          <ListItem
+            fullName={student.name}
+            avatarColor={Math.floor(Math.random() * 16777215).toString(16)}
+            avatar={student.name}
+            id={student.id}
+            key={student.id}
+            usersPlan={student?.usersPlan}
+          />
+        ))}
+
         <div className="pagination">
           <Pagination count={5} />
         </div>

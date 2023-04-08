@@ -12,8 +12,8 @@ export class MealsService {
     return await this.mealsRepository.create<Meal>(meal);
   }
 
-  public async getAllUserMeal(userId: number, planId: number) {
-    return await this.mealsRepository.findAll({ where: { userId, planId } });
+  public async getAllUserMeal(userId: number) {
+    return await this.mealsRepository.findAll({ where: { userId } });
   }
 
   public async getAllMealsByMealType(mealType: string) {

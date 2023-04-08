@@ -1,20 +1,24 @@
-import { Avatar } from "@mui/material";
-import { Link } from "react-router-dom";
-import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
-import "./ListItem.css";
+import { Avatar, Chip } from '@mui/material';
+import { Link } from 'react-router-dom';
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+import './ListItem.css';
+import { DetailedHTMLProps, HTMLAttributes } from 'react';
+import { UsersPlan } from '../../interfaces/user.interface';
 
-type ListItemProps = {
+interface ListItemProps {
   id: number;
   fullName: string;
   avatar: string;
   avatarColor: string;
-};
+  usersPlan: UsersPlan | null;
+}
 
 export default function ListItem({
   id,
   fullName,
   avatar,
   avatarColor,
+  usersPlan,
 }: ListItemProps) {
   return (
     <div className="list-Item">
@@ -22,7 +26,7 @@ export default function ListItem({
         <div className="avatar">
           <Avatar
             alt={avatar}
-            style={{ backgroundColor: avatarColor }}
+            style={{ backgroundColor: `#${avatarColor}` }}
             src="/static/images/avatar/2.jpg"
           />
         </div>
@@ -31,12 +35,11 @@ export default function ListItem({
         </div>
       </div>
       <div className="item-right">
-        <CheckCircleOutlineIcon
-          style={{
-            fontSize: "30px",
-            marginRight: "1rem",
-            cursor: "pointer",
-          }}
+        <Chip
+          label={!!usersPlan ? 'Active' : 'Inactive'}
+          color={!!usersPlan ? 'success' : 'primary'}
+          variant="outlined"
+          style={{ marginRight: '1rem' }}
         />
         <Link to={`/Dashboard/Student/${id}`}>
           <button>view</button>

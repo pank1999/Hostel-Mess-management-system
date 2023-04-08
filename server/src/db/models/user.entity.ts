@@ -1,5 +1,6 @@
-import { Model } from 'sequelize-typescript';
+import { HasOne, Model } from 'sequelize-typescript';
 import { Column, DataType, Table } from 'sequelize-typescript';
+import { UsersPlan } from './users-plan.entity';
 
 @Table
 export class User extends Model<User> {
@@ -20,4 +21,10 @@ export class User extends Model<User> {
     allowNull: false,
   })
   password: string;
+
+  @Column
+  role: string;
+
+  @HasOne(() => UsersPlan)
+  usersPlan: UsersPlan;
 }
