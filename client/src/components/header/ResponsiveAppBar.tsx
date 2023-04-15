@@ -9,38 +9,34 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
-import Tooltip from '@mui/material/Tooltip';
+// import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import AdbIcon from '@mui/icons-material/Adb';
-import CookieIcon from '@mui/icons-material/Cookie';
 import RestaurantMenuIcon from '@mui/icons-material/RestaurantMenu';
 import { Link } from 'react-router-dom';
 
-const pages = ['Menu', 'Pricing', 'Blog'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+const pages = ['Menu', 'Pricing', 'Blog', 'Dashboard'];
+// const settings = ['Profile', 'Account', 'Logout'];
 
 function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null,
   );
-  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
-    null,
-  );
+  const [setAnchorElUser] = React.useState<null | HTMLElement>(null);
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
   };
-  const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorElUser(event.currentTarget);
-  };
+  // const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
+  //   setAnchorElUser(event.currentTarget);
+  // };
 
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
 
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
-  };
+  // const handleCloseUserMenu = () => {
+  //   setAnchorElUser(null);
+  // };
 
   return (
     <AppBar position="static">
@@ -67,9 +63,11 @@ function ResponsiveAppBar() {
           >
             Hotel
           </Typography>
-          <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+            <RestaurantMenuIcon
+              sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }}
+            />
             <IconButton
               size="large"
               aria-label="account of current user"
@@ -123,7 +121,7 @@ function ResponsiveAppBar() {
               textDecoration: 'none',
             }}
           >
-            LOGO
+            Hotel
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
@@ -141,18 +139,23 @@ function ResponsiveAppBar() {
               </Link>
             ))}
           </Box>
-          <Link
-            to="/Dashboard"
-            style={{ textDecoration: 'none', color: 'white' }}
-          >
+          <Link to="/Login" style={{ textDecoration: 'none', color: 'white' }}>
             <Typography
               textAlign="center"
               style={{ marginRight: '1rem', cursor: 'pointer' }}
             >
-              Dashboard
+              Login
             </Typography>
           </Link>
-
+          <Link to="/Signup" style={{ textDecoration: 'none', color: 'white' }}>
+            <Typography
+              textAlign="center"
+              style={{ marginRight: '1rem', cursor: 'pointer' }}
+            >
+              Register
+            </Typography>
+          </Link>
+          {/* 
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
@@ -181,7 +184,7 @@ function ResponsiveAppBar() {
                 </MenuItem>
               ))}
             </Menu>
-          </Box>
+          </Box> */}
         </Toolbar>
       </Container>
     </AppBar>

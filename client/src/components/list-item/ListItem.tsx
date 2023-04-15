@@ -1,8 +1,6 @@
 import { Avatar, Chip } from '@mui/material';
 import { Link } from 'react-router-dom';
-import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import './ListItem.css';
-import { DetailedHTMLProps, HTMLAttributes } from 'react';
 import { UsersPlan } from '../../interfaces/user.interface';
 
 interface ListItemProps {

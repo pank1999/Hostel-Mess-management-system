@@ -36,9 +36,10 @@ export class UserService {
     });
     const isUserVerified = await this.verifyUser(password, user.password);
     if (isUserVerified) {
+      delete user.password;
       return user;
     }
-    return { message: 'incorrect password' };
+    return 'error';
   }
 
   private async verifyUser(password: string, dbPassword: string) {
@@ -55,7 +56,10 @@ export class UserService {
     });
   }
   public async getAllActivePlanUser(isActive: boolean) {
-    return await this.userRepository.findAll({ include: [UsersPlan] });
+    return await this.userRepository.findAll({
+      where: { role: 'student' },
+      include: [UsersPlan],
+    });
   }
   public async getFilteredActivePlanUser(isActive: boolean, query: string) {
     const users = await this.userRepository.findAll({ include: [UsersPlan] });
@@ -76,5 +80,9 @@ export class UserService {
 
   public async getUserById(id: number) {
     return await this.userRepository.findByPk(id);
+  }
+
+  public async logout() {
+    console.log('logout');
   }
 }

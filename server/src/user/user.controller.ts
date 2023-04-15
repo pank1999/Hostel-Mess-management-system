@@ -46,4 +46,9 @@ export class UserController {
   public getUserById(@Param('id') id: number) {
     return this.userService.getUserById(id);
   }
+
+  @Post('/logout')
+  public logout() {
+    return this.userService.logout();
+  }
 }

@@ -7,6 +7,12 @@ export interface IUser {
   usersPlan: UsersPlan;
 }
 
+export interface ILoggedInUser {
+  id: number;
+  mobileNumber: number;
+  password: string;
+}
+
 export interface IPlan {
   title: string;
   noOfMeals: number;

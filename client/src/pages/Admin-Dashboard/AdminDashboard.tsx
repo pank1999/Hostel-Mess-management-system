@@ -4,7 +4,6 @@ import * as React from 'react';
 import ListItem from '../../components/list-item/ListItem';
 import Axios from 'axios';
 import { IUser } from '../../interfaces/user.interface';
-import { useQuery } from '@tanstack/react-query';
 export default function Dashboard() {
   const BASE_URL = 'http://localhost:3001';
 

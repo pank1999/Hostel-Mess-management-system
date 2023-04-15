@@ -2,12 +2,14 @@ import { Avatar, Button, Modal, Typography } from '@mui/material';
 import './Student.css';
 import Box from '@mui/material/Box';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Axios from 'axios';
 import { useParams } from 'react-router-dom';
 import { IUser, Meal, UsersPlan } from '../../interfaces/user.interface';
 import { useQuery } from '@tanstack/react-query';
 import moment from 'moment';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const columns: GridColDef[] = [
   { field: 'id', headerName: 'ID', width: 90 },
@@ -57,11 +59,13 @@ export default function Student() {
   const handleClose = () => setOpen(false);
   const param = useParams();
 
-  const {
-    data: meals,
-    isLoading,
-    refetch,
-  } = useQuery<Meal[]>(['meal'], async () => {
+  const showToastMessage = () => {
+    toast.success('Meal add successful', {
+      position: toast.POSITION.TOP_RIGHT,
+    });
+  };
+
+  const { data: meals, refetch } = useQuery<Meal[]>(['meal'], async () => {
     return await Axios.get<Meal[]>(`${BaseURL}/meals/${param.id}`).then(
       (res) => {
         const mealData = res.data.map((meal) => {
@@ -94,6 +98,7 @@ export default function Student() {
     console.log(quantity, type);
     await addMeal(type!, quantity!);
     setOpen(false);
+    showToastMessage();
   };
 
   const addMeal = async (type: string, quantity: number) => {
@@ -198,6 +203,7 @@ export default function Student() {
           </Typography>
         </Box>
       </Modal>
+      <ToastContainer />
     </div>
   );
 }
